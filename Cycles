@@ -9,3 +9,16 @@
     "setOutput('counter', counter)"
   ]
 }
+
+--Lookahead
+{
+  "partition_by": [
+    "machine"
+  ],
+  "fields": [
+    {
+      "from_field": "counter",
+      "to_field": "next_counter"
+    }
+  ]
+}
