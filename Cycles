@@ -1,0 +1,11 @@
+--Set cycle boundaries
+--Apply Expression
+{
+  "program": [
+    "copyInputRecord()",
+    "epoch = DateTime.unixEpoch()",
+    "ms = duration(epoch, getInput('timestamp'))",
+    "counter = ms - (ms % 30000)",
+    "setOutput('counter', counter)"
+  ]
+}
