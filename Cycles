@@ -22,3 +22,14 @@
     }
   ]
 }
+
+--Apply Expression to signal cycle end
+{
+"program": [
+"copyInputRecord()",
+"counter = getInput('counter')",
+"next_counter = getInput('next_counter')",
+"cycle_end = if (counter != next_counter) { true } else { false }",
+"setOutput('cycle_end', cycle_end)"
+]
+}
