@@ -33,3 +33,84 @@
 "setOutput('cycle_end', cycle_end)"
 ]
 }
+
+--Aggregate
+{
+  "partition_by": [
+    "machine"
+  ],
+  "boundary_field": "cycle_end",
+  "emit_window": "when_complete",
+  "fields": [
+    {
+      "function": "last",
+      "from_field": "Temperature",
+      "to_field": "Temperature"
+    },
+    {
+      "function": "last",
+      "from_field": "counter",
+      "to_field": "counter"
+    },
+    {
+      "function": "last",
+      "from_field": "cycle_end",
+      "to_field": "cycle_end"
+    },
+    {
+      "function": "last",
+      "from_field": "edge_arrival_timestamp",
+      "to_field": "edge_arrival_timestamp"
+    },
+    {
+      "function": "last",
+      "from_field": "factory",
+      "to_field": "factory"
+    },
+    {
+      "function": "last",
+      "from_field": "machine",
+      "to_field": "machine"
+    },
+    {
+      "function": "last",
+      "from_field": "machine_type",
+      "to_field": "machine_type"
+    },
+    {
+      "function": "last",
+      "from_field": "next_counter",
+      "to_field": "next_counter"
+    },
+    {
+      "function": "last",
+      "from_field": "stream_type",
+      "to_field": "stream_type"
+    },
+    {
+      "function": "max",
+      "to_field": "timestamp",
+      "from_field": "timestamp"
+    },
+    {
+      "function": "last",
+      "from_field": "timezone",
+      "to_field": "timezone"
+    }
+  ]
+}
+
+
+--Add endtime and Cycle-related mandatory fields
+{
+"program": [
+"copyInputRecord()",
+"setOutput('endtime', addDuration(getInput('starttime'), 30000))",
+"setOutput('shift', 'Shift A')",
+"setOutput('output', 1.0)",
+"setOutput('ideal_duration', 1.0)",
+"setOutput('up_time', 1.0)",
+"setOutput('production_date_start', extractDay(getInput('starttime'),
+toZoneId('UTC')))"
+]
+}
